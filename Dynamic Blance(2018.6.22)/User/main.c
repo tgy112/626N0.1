@@ -110,7 +110,7 @@ int main(void)
 	  _485_Config();
     LED_GPIO_Config();
    
-	  EXT(0,11);
+//	  EXT(0,11);
 	  EXT(0,6);
 	
 	//485测试
@@ -177,7 +177,7 @@ int main(void)
 //			flag=0;
 //		}
 //	}
-	 
+	 while(1);
 	//求影响系数以及永久配重
 	 while(1)
 	  {
@@ -187,7 +187,7 @@ int main(void)
 					Get_Vibration_phase_right();
 					flag_Calculate = 0;
 				}
-				printf("%f\r\n",RPM);
+
 				cal_k(P_A10,P_A11,P_P1,&P_K11);//求取影响系数k，需要分别求取，注意求K时候需要的振动量
 				cal_k(P_A20,P_A21,P_P1,&P_K21);
 				cal_k(P_A10,P_A12,P_P2,&P_K12);
