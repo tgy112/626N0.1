@@ -110,8 +110,8 @@ int main(void)
 	  _485_Config();
     LED_GPIO_Config();
    
-//	  EXT(0,11);
-	  EXT(0,6);
+
+//	  EXT(0,6);
 	
 	//485测试
 	/*********************************************BEGIN OF FILE**********************/
@@ -174,10 +174,18 @@ int main(void)
 
 //			CAN_DEBUG_ARRAY(RxMessage.Data,8); 
 //			
-//			flag=0;
+//			flag=0;lalaal
 //		}
 //	}
-	 while(1);
+	 while(1)
+	 {
+		if(flag_Calculate == 1)	//当滤波完成后，得到左右校正平面幅相值
+				{
+					Get_Vibration_phase_left();
+					Get_Vibration_phase_right();
+					flag_Calculate = 0;
+				}
+	 }
 	//求影响系数以及永久配重
 	 while(1)
 	  {

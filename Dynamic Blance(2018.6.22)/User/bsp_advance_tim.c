@@ -126,7 +126,7 @@ void  ADVANCE_TIM_IRQHandler (void)
     /* ÆµÂÊ¼ÆËã */
     Frequency = 180000000/1800/(float)IC2Value;
 		RPM = 60 * Frequency;
-		printf("%f\r\n",RPM);
+//		printf("%f\r\n",RPM);
   }
   else
   {

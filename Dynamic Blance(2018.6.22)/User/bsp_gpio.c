@@ -4,7 +4,7 @@
   * @author  zhangmi
   * @version V1.0
   * @date    2018-6-19
-  * @brief   振动信号放大倍数选择AB=00：放大4倍，AB=10：放大2倍,AB=01：放大1倍,AB=00：缩小2倍.
+  * @brief   振动信号放大倍数选择AB=00：放大4倍，AB=10：放大2倍,AB=01：放大1倍,AB=11：缩小2倍.
 	* 
 	* @date    2018-6-20
   * @brief   沟槽信号分频，CD4522BPW---P0，P1，P2，P3；
@@ -39,7 +39,7 @@ void LED_GPIO_Config(void)
 		//PA8，连接到CD4522BPW的P0
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
-	GPIO_ResetBits(GPIOA, GPIO_Pin_8);
+	GPIO_SetBits(GPIOA, GPIO_Pin_8);
 	
 		//PG2，连接到CD4522BPW的P1;PG3，连接到CD4522BPW的P2
 	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;

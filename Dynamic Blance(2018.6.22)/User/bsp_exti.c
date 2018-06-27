@@ -109,7 +109,7 @@ void EXTI_Key_Config(void)
   EXTI_InitStructure.EXTI_Line = KEY2_INT_EXTI_LINE;
   EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
   /* 下降沿触发 */
-  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;  
+  EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
   EXTI_InitStructure.EXTI_LineCmd = ENABLE;
   EXTI_Init(&EXTI_InitStructure);
 }
@@ -130,8 +130,8 @@ void KEY1_IRQHandler(void)//PH11，周期中断
 				if(RPM>200)//当转速达到2000时，开始采样
 				{
 						flag_T_Signal=1;
-						EXT(1,6);//打开采样信号中断
-						EXT(0,11);//关闭周期中断
+//						EXT(1,6);//打开采样信号中断
+//						EXT(0,11);//关闭周期中断
 				}
 				else
 					flag_T_Signal=0;//速度小于2000
@@ -166,8 +166,8 @@ void KEY2_IRQHandler(void)//PA6
 									 flag_print_OK = 1; //采集完数据了，开始打印
 									 num_shuzu = 0;
 									 flag_T_Signal = 0;
-									 EXT(0,6);
-									 EXT(1,11);
+//									 EXT(0,6);
+//									 EXT(1,11);
 												 
 									for(i=0;i<=31;i++)//数组转存，避免正在处理数据过程中断到来更改数据
 										{
@@ -210,7 +210,7 @@ void Get_Vibration_phase_left(void)
 					//printf("%f \r\n",M[j]);
 			}
 			
-		printf("1 \r\n");
+//		printf("1 \r\n");
 			
 		//互相关滤波(毛老师的法子)
 		X_a=M[0]*cos(0)+M[1]*(cos(angle))+M[2]*(cos(2*angle))+M[3]*(cos(3*angle))+M[4]*(cos(4*angle))+M[5]*(cos(5*angle))+M[6]*(cos(6*angle))+M[7]*(cos(7*angle))
@@ -291,11 +291,18 @@ void Get_Vibration_phase_right(void)
 		b_temp=atan(Y_b/X_b)/3.14159*180;//右校正平面的相位
 		
 		//相位补偿
-		if((max_i<12 && (b_temp<=90 && b_temp>=0)) || (max_i>=24 && (b_temp>=-90 && b_temp<=0)))//将-90到90度的数据转换成为360数据
-			b=b_temp-180+270;
-		else 			
-			b=b_temp+270;
+//		if((max_i<12 && (b_temp<=90 && b_temp>=0)) || (max_i>=24 && (b_temp>=-90 && b_temp<=0)))//将-90到90度的数据转换成为360数据
+//			b=b_temp-180+270;
+//		else 			
+//			b=b_temp+270;
 		
+			if(X_b>0)//相脚补偿
+			{
+				if(Y_b<0)b = b_temp + 360;
+				else		 b = b_temp;
+			}
+		else b = b_temp + 180;
+			
 		b+=190;//简单数据转换，方便与毛老师设备对比，后面根据实际需要修改
 		if(b>360)b_test=b-360;
 		else b_test = b;
